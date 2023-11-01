@@ -1,0 +1,32 @@
+{% extends 'base_custom.html' %}
+{% block content %}
+  <h1>Program Registration Submissions</h1>
+  <table class="table" id="this_table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Member/Agg</th>
+        <th scope="col">VEN ID</th>
+        <th scope="col">Device ID</th>
+        <th scope="col">Submitted</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for register in registers %}
+      <tr class="register" id={{ register.id }} onclick="window.location='/submission/{{ register.pk }}/edit'">
+        <td scope="row">{{ forloop.counter }}</td>
+        <td scope="row">{{ register.member_name }}</td>
+        <td scope="row">{{ register.member_email }}</td>
+        <td scope="row">{{ register.member_phone }}</td>
+        <td scope="row">{{ register.register_type }}</td>
+        <td scope="row">{{ register.ven_id }}</td>
+        <td scope="row">{{ register.device_id }}</td>
+        <td scope="row">{{ register.date|date:"m/d/Y" }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base_custom.html' %}
+
+{% block content %}
+  <h1>Lookup VEN or Device IDs</h1>
+    <form class="form-inline my-2 my-lg-0" style="margin-bottom:40px !important;" method="GET" >
+      <input class="form-control mr-sm-2" type="search" name="search" style="width:30%;"value="{{request.GET.search}}">
+      <button class="btn btn btn-outline-info" style="border-color:#7AC88B; color:#7AC88B;"  name="show_result" type="submit"> Search </button>
+    </form>
+  <div id="lookup_device_result">
+  {% if results %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">VEN ID</th>
+        <th scope="col">Device ID</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    {% for result in results %}
+    <tbody>
+      <tr class="result" >
+        <td scope="row">{{ forloop.counter }}</td>
+        <td scope="row">{{ result.ven_id }}</td>
+        <td scope="row">{{ result.device_id }}</td>
+        <td scope="row">
+          {% if result.statusOn == True%}
+          <span style="color:#31826D;">Connected</span>
+          {% else %}
+          <span style="color:#FF0000;">Disconnected</span>
+          {% endif%}
+        </td>
+      </tr>
+    </tbody>
+   {% endfor %}
+  </table>
+  {% else%}
+  <b>No records found.</b>
+  {% endif%}
+  </div>
+{% endblock %}

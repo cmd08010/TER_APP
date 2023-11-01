@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+   Register Form
+{% endblock %}
+
+{% block script %}
+    function ShowHideDiv() {
+        var isAggregator = document.getElementById("aggregator");
+        var aggregator_div = document.getElementById("aggregator_form");
+        aggregator_div.style.display = isAggregator.checked ? "block" : "none";
+
+        AggregatorFieldsIsRequired(isAggregator)
+    }
+    function AggregatorFieldsIsRequired(isAggregator) {
+        var aggregator_inputs = document.getElementsByClassName("aggregator");
+        required_value = isAggregator.checked ? true : false;
+
+        for(n in aggregator_inputs){
+            aggregator_inputs[n].required = required_value
+        }
+    }
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+{% endblock %}
+
+{% block title_page %}
+    <h1>Transactive Energy Rate Registration</h1>
+{% endblock %}
+{% block content %}
+    <p>Begin registration for the Transactive Energy Rate by providing your contact and device information.</p><br>
+    <h5>Registration Type</h5>
+
+    <form action="/register/" method="post" style="width:50%;">
+        {% csrf_token %}
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="register_type" id="member" value="member" checked="checked" onclick="ShowHideDiv()">
+          <label class="form-check-label">I’m a Member</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="register_type" id="aggregator" value="aggregator" onclick="ShowHideDiv()">
+          <label class="form-check-label">Aggregator registering on behalf of a Member</label>
+        </div>
+        <br><br>
+        <div id="aggregator_form" style="display:none;">
+            <h4>Your Contact Information</h4>
+            <input id="company" class="form-control aggregator" placeholder="Company" type="text" name="company" value="{{ company }}"><br>
+            <input id="aggregator_name" class="form-control aggregator" placeholder="First and Last Name" type="text" name="aggregator_name" value="{{ aggregator_name }}"><br>
+            <input id="aggregator_email" class="form-control aggregator" placeholder="Email Address" type="email" name="aggregator_email" value="{{ aggregator_email }}"><br>
+            <input id="aggregator_phone" class="form-control aggregator" placeholder="Phone Number" type="text" name="aggregator_phone" value="{{ aggregator_phone }}"><br>
+        </div>
+        <h4>Member Account & Contact Information</h4>
+        <input id="member_name" class="form-control" placeholder="First and Last Name" type="text" name="member_name" value="{{ member_name }}" required><br>
+        <div class="input-group">
+            <input id="account_address" class="form-control" placeholder="Account Address" type="text" name="account_address" value="{{ account_address }}" required>
+            <div class="input-group-append">
+                <a
+                  class="input-group-text"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-html="true"
+                  title="<h5>Account Information</h5><div>Account information can be found on the member’s NHEC utility bill. Please use the address associated with the member’s utility bill.</div>"
+                >
+                    {% load static %}
+                    <img src="{% static 'img/question-circle.svg' %}" alt="Help text">
+                </a>
+            </div>
+        </div>
+        <br>
+        <div class="input-group">
+            <input id="account_number" class="form-control" placeholder="Account Number" type="text" name="account_number" value="{{ account_number }}" required>
+            <div class="input-group-append">
+                <a
+                  class="input-group-text"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-html="true"
+                  title="<h5>Account Information</h5><div>Account information can be found on the member’s NHEC utility bill. Please use the number associated with the member’s utility bill.</div>"
+                >
+                    {% load static %}
+                    <img src="{% static 'img/question-circle.svg' %}" alt="Help text">
+                </a>
+            </div>
+        </div>
+        <br>
+        <input id="member_email" class="form-control" placeholder="Email Address" type="email" name="member_email" value="{{ member_email }}" required><br>
+        <input id="member_phone" class="form-control" placeholder="Phone Number" type="text" name="member_phone" value="{{ member_phone }}" required><br>
+
+        <h4>Device Connectivity Information</h4>
+        <p>This information will be used to help setup connectivity between the member device and NHEC’s TER program. </p>
+         <div class="input-group">
+            <input id="ven_id" class="form-control" placeholder="VEN ID" type="text" name="ven_id" value="{{ ven_id }}" required>
+            <div class="input-group-append">
+                <a
+                  class="input-group-text"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-html="true"
+                  title="<h5>Virtual End Node (VEN) ID Help</h5><div>The VEN ID is often provided with the gateway that connects to your smart device for control (such as Rainforest Automation, Zigbee, etc).</div>"
+                >
+                    {% load static %}
+                    <img src="{% static 'img/question-circle.svg' %}" alt="Help text">
+                </a>
+            </div>
+        </div>
+        <br>
+        <div class="input-group">
+            <input id="device_id" class="form-control" placeholder="Device ID" type="text" name="device_id" value="{{ device_id }}" required>
+            <div class="input-group-append">
+                <a
+                  class="input-group-text"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-html="true"
+                  title="<h5>Device ID</h5><div>The Device ID is the cloud URL to communicate with the device being registered for the program.</div>"
+                >
+                    {% load static %}
+                    <img src="{% static 'img/question-circle.svg' %}" alt="Help text">
+                </a>
+            </div>
+        </div>
+        <br>
+        <select class="form-control" name="device_type" id="device_type" required>
+          <option value="">--- Select Device Type ---</option>
+          <option value="battery">Backup Battery </option>
+          <option value="vehicle_or_charger">EV Vehicle or Charger</option>
+          <option value="other">Other</option>
+        </select>
+        <br><br>
+        <input type="submit" class="btn" style="background:#774AF8;color:white;" value="Submit Information">
+    </form>
+    <br>
+    <p>Having trouble? Contact NHEC member services at (800)-698-2007 for help completing registration.</p>
+    <br><br><br>
+{% endblock %}

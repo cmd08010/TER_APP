@@ -1,0 +1,55 @@
+{% extends 'base_custom.html' %}
+{% block script %}
+    function delete_user(selected_user){
+        document.getElementById("myform_delete").action = selected_user.href
+    }
+{% endblock %}
+{% block content %}
+<h1 style="display:inline-block;margin:50px 0px 25px 0px;">Admin Settings</h1>
+<span style="float:right;margin: 70px 0px 25px 0px;"><a href="{% url 'add_user' %}">+Add New Admin</a></span>
+<table class="table" id="this_table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr class="user" id={{ user.id }}>
+      <td scope="row">{{ forloop.counter }}</td>
+      <td scope="row">{{ user.first_name }}</td>
+      <td scope="row">{{ user.email }}</td>
+      <td scope="row"><a href="{% url 'edit_user' user.id %}">Edit</a></td>
+      <td scope="row"><a href="{% url 'delete_user' user.id %}" data-toggle="modal" data-target="#delete-item-modal" onclick="delete_user(this)" class="delete-button">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<!-- Modal Delete record -->
+<div id="delete-item-modal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<h4 class="modal-title w-100">Confirm Delete NHEC User?</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					This action will delete the NHEC member’s email and password and prevent them from logging back into the TER admin site.<br><br>
+					This action cannot be undone.
+				</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<form id="myform_delete" method="post" action="" name="registered">
+				   {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger" id="confirm-delete-item-button">Delete</button>
+				 	<a href="#"><div class="btn btn-outline-dark" data-dismiss="modal">Cancel</div></a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

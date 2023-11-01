@@ -1,0 +1,91 @@
+{% extends 'base_custom.html' %}
+
+{% block script %}
+function copyEvent(id)
+    {
+        var str = document.getElementById(id);
+        window.getSelection().selectAllChildren(str);
+        document.execCommand("Copy")
+    }
+{% endblock %}
+
+{% block content%}
+<h1>Program Registration:<span style="font-weight: 400;color: #555555"> {{ object.member_name }}</span></h1>
+    {% if object.register_type == "aggregator" %}
+	<br>
+    <h4>Aggregator Contact Info</h4>
+    <b>{{ object.aggregator_name }}</b>
+    <p>Company: {{ object.company }}</p>
+    <p>E-mail: {{ object.aggregator_email }}</p>
+    <p>Phone: {{ object.aggregator_phone }}</p>
+    {% endif %}
+	<br>
+    <h4>Member Account & Contact Info</h4>
+    <p>If the member hasn’t gotten in touch, please call them to help them complete registration. </p>
+    <b>{{ object.member_name }}</b>
+    <p>E-mail: {{ object.member_email }}</p>
+    <p>Phone: {{ object.member_phone }}</p>
+    <p>Account Address: <span id="account_address">{{ object.account_address }}</span><button class="btn btn-success btn-sm copy-button" onclick="copyEvent('account_address')">COPY</button></p>
+    <p>Account Number: <span id="account_number">{{ object.account_number }}</span><button class="btn btn-success btn-sm copy-button" onclick="copyEvent('account_number')">COPY</button></p>
+	<br>
+    <h4>Device Information</h4>
+    <p>Copy the information below into a new TER Meter in the CIS associated with the above member’s account. </p>
+    <p><b>VEN ID: </b><span id="ven_id">{{ object.ven_id }}</span><button class="btn btn-success btn-sm copy-button" onclick="copyEvent('ven_id')">COPY</button></p>
+    <p><b>DEVICE ID: </b><span id="device_id">{{ object.device_id }}</span><button class="btn btn-success btn-sm copy-button" onclick="copyEvent('device_id')">COPY</button></p>
+    <p><b>TYPE: </b>{{ object.device_type}}</p>
+	<div class="button-action">
+		<a href="#modal-registered" data-toggle="modal"><button class="btn btn-outline btn-purple">Mark Registered in CIS</button></a>
+		<a href="#modal-delete-record" data-toggle="modal"><button class="btn btn-outline-danger">Delete record</button></a>
+		<a href="/submissions" class="purple">Go Back</a>
+	</div>
+<!-- Modal Mark Registered -->
+<div id="modal-registered" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<h4 class="modal-title w-100">Confirm Register & Delete PII?</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					This action will delete the member’s record from the Registeration Submissions list and their
+					Personally Identifiable Information (PII). This should only be done once a member is successfully
+					registered for the TER in the CIS system.<br><br>
+					This action cannot be undone.
+				</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<form id="myform_registered" method="post" action="" name="registered">
+				   {% csrf_token %}
+					<button  class="btn btn-outline-danger" type="submit" name="mark_registered">Confirm</button>
+				 	<a href="/submissions"><div class="btn btn-outline-dark" data-dismiss="modal">Cancel</div></a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Delete record -->
+<div id="modal-delete-record" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<h4 class="modal-title w-100">Confirm Delete Record?</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					This action will delete the member’s record from the Registration Submissions list and their
+					Personally Identifiable Information (PII). This should only be done if a member is no longer
+					interested in registering for the program.<br><br>
+					This action cannot be undone.
+				</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<form id="myform_delete" method="post" action="" name="registered">
+				   {% csrf_token %}
+					<button  class="btn btn-outline-danger" type="submit" name="delete">Confirm</button>
+				 	<a href="/submissions"><div class="btn btn-outline-dark" data-dismiss="modal">Cancel</div></a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

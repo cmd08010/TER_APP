@@ -1,0 +1,76 @@
+{% extends 'base_custom.html' %}
+{% block script %}
+window.onload = (event) => {
+    disableFields(true)
+};
+function disableFields(value){
+    document.getElementById("id_first_name").disabled = value;
+    document.getElementById("id_email").disabled = value;
+}
+function activeEdit(field, button){
+    var element = document.getElementById(field);
+    element.classList.remove('input-block');
+    element.disabled = false;
+
+    document.getElementById(button).style.display = "none";
+}
+{% endblock %}
+{% block content %}
+<h1>Edit User</h1>
+<form method="post" class="form-sm">
+  {% csrf_token %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if messages.tags == 'error' %}
+                disableFields(true)
+            {% endif %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+  <div class="form-group">
+    <label>Name</label><br>
+    <div class="input-group mb-3">
+        {{ form.first_name }}
+        <a target="_blank" id="edit_name" onclick="activeEdit('id_first_name', 'edit_name')">
+          <span class="purple">edit</span>
+        </a>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>NHEC Email Address</label><br>
+    <div class="input-group mb-3">
+        {{ form.email }}
+        <a target="_blank" id="edit_email" onclick="activeEdit('id_email', 'edit_email')">
+          <span class="purple">edit</span>
+        </a>
+    </div>
+  </div>
+  <div class="form-group" style="display:none;">
+    <label>Username</label>
+      {{ form.username }}
+  </div>
+  <div class="form-group">
+    <label>Password</label><br>
+    {{ form.password1}}
+  </div>
+  <div class="form-group">
+    <label>Confirm Password</label><br>
+    {{ form.password2}}
+  </div>
+  <div class="form-group">
+    <label>Permissions (Super Admins can manage users)</label><br>
+    <select name="permission_type" class="form-control">
+      <option value="">Select Permissions Type</option>
+        {% for type in form.permission_type %}
+          {{ type }}
+        {% endfor %}
+    </select>
+  </div>
+  <div class="form-button">
+      <button type="submit" class="btn btn-outline btn-purple" onclick="disableFields(false)">Save</button>
+      <a href="{% url 'admin_settings' %}" class="purple" style="margin-left:25px;">Go Back</a>
+  </div>
+</form>
+{% endblock %}

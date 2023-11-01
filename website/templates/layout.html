@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>
+      {% block title %}
+      {% endblock %}
+   </title>
+   {% load static %}
+   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+   <link rel="stylesheet" type="text/css" href="{% static "admin/css/style.css" %}">
+   <script src="{% static 'js/popper.min.js' %}"></script>
+   <script src="{% static 'js/jquery.min.js' %}"></script>
+   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+   <script>
+      {% block script %}
+      {% endblock %}
+   </script>
+   <style>
+      {% block style %}
+      {% endblock %}
+   </style>
+</head>
+<body>
+   <div>
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background:#31826D;">
+         <div class="wpmm_brand_logo_wrap">
+            <a href="https://www.nhec.com/">
+               <img src="https://www.nhec.com/wp-content/uploads/2019/11/NHEC-logo-white-1.png" width="150px" height="60px" alt="NHEC">
+            </a>
+         </div>
+      </nav>
+   </div>
+   <div class="container">
+   {% block title_page %}
+   {% endblock %}
+   {% block content %}
+   {% endblock %}
+   </div>
+</body>
+</html>
+

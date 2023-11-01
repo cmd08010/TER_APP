@@ -1,0 +1,582 @@
+{
+	"info": {
+		"_postman_id": "0eda834d-0c8e-43e9-bf6e-2f897a7c906c",
+		"name": "NHECTER",
+		"description": "WSDLs: [http://docs.oasis-open.org/energyinterop/ei/v1.0/os/wsdl/](http://docs.oasis-open.org/energyinterop/ei/v1.0/os/wsdl/)\n\n[https://www.openadr.org/assets/openadr_drprogramguide_v1.0.pdf](https://www.openadr.org/assets/openadr_drprogramguide_v1.0.pdf)\n\nOpen ADR supports the following services:  \n• EiEvent Service - Used by VTNs to send demand response events to VENs, and used  \nby VENs to indicate whether resources are going to participate in the event. The only  \nservice supported by the A profile is EiEvent  \n• EiReport Service - Used by VENs and VTNs to exchange historical, telemetry, and  \nforecast reports  \n• EiOpt Service - Used by VEN to communicate temporary availability schedule to  \nVTNs or to qualify the resources participating in an event  \n• EiRegisterParty Service - Initiated by the VEN, and used by both VEN and VTN to  \nexhange information required to ensure interoperable exchange of payloads  \n• OadrPoll Service - Used by VENs to poll the VTN for payloads from any of the other  \nservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "VEN",
+			"item": [
+				{
+					"name": "EiRegisterParty",
+					"item": [
+						{
+							"name": "EiRegisterParty",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\" xmlns:emix=\"http://docs.oasis-open.org/ns/emix/2011/06\" oadr:Id=\"oadrSignedObject\">\n    <oadr:oadrCreatePartyRegistration ei:schemaVersion=\"2.0a\" xsi:schemaLocation=\"http://openadr.org/oadr-2.0b/2012/07 oadr_20b.xsd\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\" xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    \t<pyld:requestID>REQ_123</pyld:requestID>\n    \t<ei:venID>VEN_1234</ei:venID>\n    \t<oadr:oadrProfileName>2.0b</oadr:oadrProfileName>\n    \t<oadr:oadrTransportName>simpleHttp</oadr:oadrTransportName>\n    \t<oadr:oadrReportOnly>false</oadr:oadrReportOnly>\n    \t<oadr:oadrXmlSignature>false</oadr:oadrXmlSignature>\n    \t<oadr:oadrVenName>MyVEN</oadr:oadrVenName>\n    \t<oadr:oadrHttpPullModel>true</oadr:oadrHttpPullModel>\n    </oadr:oadrCreatePartyRegistration>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiRegisterParty",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"port": "8082",
+									"path": [
+										"OpenADR2",
+										"Simple",
+										"2.0b",
+										"EiRegisterParty"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Query Registration",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n  <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n    <oadr:oadrQueryRegistration xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" ei:schemaVersion=\"2.0b\">\n      <requestID xmlns=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">455dd699-ab81-4df6-8f74-79100db81082</requestID>\n    </oadr:oadrQueryRegistration>\n  </oadr:oadrSignedObject>\n</oadr:oadrPayload>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiRegisterParty",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"port": "8082",
+									"path": [
+										"OpenADR2",
+										"Simple",
+										"2.0b",
+										"EiRegisterParty"
+									]
+								},
+								"description": "A way for the VEN to query the VTNs registration information without actually registering.  \n  \nRead more: [https://manuals.plus/openadr/openadr-2-0-demand-response-program-guide#ixzz7T0zY8P1z](https://manuals.plus/openadr/openadr-2-0-demand-response-program-guide#ixzz7T0zY8P1z)"
+							},
+							"response": [
+								{
+									"name": "Query Registration Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n  <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n    <oadr:oadrQueryRegistration xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" ei:schemaVersion=\"2.0b\">\n      <requestID xmlns=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">455dd699-ab81-4df6-8f74-79100db81082</requestID>\n    </oadr:oadrQueryRegistration>\n  </oadr:oadrSignedObject>\n</oadr:oadrPayload>",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiRegisterParty",
+											"protocol": "http",
+											"host": [
+												"{{env}}",
+												"nhecter",
+												"com"
+											],
+											"port": "8082",
+											"path": [
+												"OpenADR2",
+												"Simple",
+												"2.0b",
+												"EiRegisterParty"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/xml; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1124"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 11 May 2022 20:54:54 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Python/3.10 aiohttp/3.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n        <oadr:oadrCreatedPartyRegistration ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\">\n            <ei:eiResponse>\n                <ei:responseCode>200</ei:responseCode>\n                <ei:responseDescription>OK</ei:responseDescription>\n                <requestID xmlns=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">455dd699-ab81-4df6-8f74-79100db81082</requestID>\n            </ei:eiResponse>\n            <ei:registrationID />\n            <ei:venID />\n            <ei:vtnID>ter_vtn_1.0</ei:vtnID>\n            <oadr:oadrProfiles>\n                <oadr:oadrProfile>\n                    <oadr:oadrProfileName>2.0b</oadr:oadrProfileName>\n                    <oadr:oadrTransports>\n                        <oadr:oadrTransport>\n                            <oadr:oadrTransportName>simpleHttp</oadr:oadrTransportName>\n                        </oadr:oadrTransport>\n                    </oadr:oadrTransports>\n                </oadr:oadrProfile>\n            </oadr:oadrProfiles>\n            <oadr:oadrRequestedOadrPollFreq>\n                <duration xmlns=\"urn:ietf:params:xml:ns:icalendar-2.0\">PT2M</duration>\n            </oadr:oadrRequestedOadrPollFreq>\n        </oadr:oadrCreatedPartyRegistration>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+								}
+							]
+						},
+						{
+							"name": "Register VEN",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n  <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n    <oadr:oadrCreatePartyRegistration xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" ei:schemaVersion=\"2.0b\">\n      <requestID xmlns=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">2774add6-fc64-4167-9dd1-602ce68639f2</requestID>\n      <ei:venID>PostmanVEN1A</ei:venID>\n      <oadr:oadrProfileName>2.0b</oadr:oadrProfileName>\n      <oadr:oadrTransportName>simpleHttp</oadr:oadrTransportName>\n      <oadr:oadrTransportAddress>http://localhost</oadr:oadrTransportAddress>\n      <oadr:oadrReportOnly>false</oadr:oadrReportOnly>\n      <oadr:oadrXmlSignature>false</oadr:oadrXmlSignature>\n      <oadr:oadrVenName>PostmanTestVEN</oadr:oadrVenName>\n      <oadr:oadrHttpPullModel>true</oadr:oadrHttpPullModel>\n    </oadr:oadrCreatePartyRegistration>\n  </oadr:oadrSignedObject>\n</oadr:oadrPayload>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiRegisterParty",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"port": "8082",
+									"path": [
+										"OpenADR2",
+										"Simple",
+										"2.0b",
+										"EiRegisterParty"
+									]
+								},
+								"description": "**oadrCreatePartyRegistration** – A request from the VEN to the VTN to register. Contains information about the VENs capabilities."
+							},
+							"response": [
+								{
+									"name": "Register VEN Resposne",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n  <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n    <oadr:oadrCreatePartyRegistration xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" ei:schemaVersion=\"2.0b\">\n      <requestID xmlns=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">2774add6-fc64-4167-9dd1-602ce68639f2</requestID>\n      <ei:venID>PostmanVEN1A</ei:venID>\n      <oadr:oadrProfileName>2.0b</oadr:oadrProfileName>\n      <oadr:oadrTransportName>simpleHttp</oadr:oadrTransportName>\n      <oadr:oadrTransportAddress>http://localhost</oadr:oadrTransportAddress>\n      <oadr:oadrReportOnly>false</oadr:oadrReportOnly>\n      <oadr:oadrXmlSignature>false</oadr:oadrXmlSignature>\n      <oadr:oadrVenName>PostmanTestVEN</oadr:oadrVenName>\n      <oadr:oadrHttpPullModel>true</oadr:oadrHttpPullModel>\n    </oadr:oadrCreatePartyRegistration>\n  </oadr:oadrSignedObject>\n</oadr:oadrPayload>",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiRegisterParty",
+											"protocol": "http",
+											"host": [
+												"{{env}}",
+												"nhecter",
+												"com"
+											],
+											"port": "8082",
+											"path": [
+												"OpenADR2",
+												"Simple",
+												"2.0b",
+												"EiRegisterParty"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/xml; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1173"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 11 May 2022 20:58:31 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Python/3.10 aiohttp/3.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n        <oadr:oadrCreatedPartyRegistration ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\">\n            <ei:eiResponse>\n                <ei:responseCode>200</ei:responseCode>\n                <ei:responseDescription>OK</ei:responseDescription>\n                <requestID xmlns=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">2774add6-fc64-4167-9dd1-602ce68639f2</requestID>\n            </ei:eiResponse>\n            <ei:registrationID>reg_id_123</ei:registrationID>\n            <ei:venID>PostmanVEN1A</ei:venID>\n            <ei:vtnID>ter_vtn_1.0</ei:vtnID>\n            <oadr:oadrProfiles>\n                <oadr:oadrProfile>\n                    <oadr:oadrProfileName>2.0b</oadr:oadrProfileName>\n                    <oadr:oadrTransports>\n                        <oadr:oadrTransport>\n                            <oadr:oadrTransportName>simpleHttp</oadr:oadrTransportName>\n                        </oadr:oadrTransport>\n                    </oadr:oadrTransports>\n                </oadr:oadrProfile>\n            </oadr:oadrProfiles>\n            <oadr:oadrRequestedOadrPollFreq>\n                <duration xmlns=\"urn:ietf:params:xml:ns:icalendar-2.0\">PT2M</duration>\n            </oadr:oadrRequestedOadrPollFreq>\n        </oadr:oadrCreatedPartyRegistration>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "EiReport",
+					"item": [
+						{
+							"name": "EiReport",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\" xmlns:emix=\"http://docs.oasis-open.org/ns/emix/2011/06\" oadr:Id=\"oadrSignedObject\">\n        <oadr:oadrUpdateReport ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\">\n            <pyld:requestID>a9dbe4a1-592b-47de-9a99-ccfa7318f19f</pyld:requestID>\n            <oadr:oadrReport xmlns:xcal=\"urn:ietf:params:xml:ns:icalendar-2.0\">\n                <strm:intervals xmlns:strm=\"urn:ietf:params:xml:ns:icalendar-2.0:stream\">\n                    <ei:interval>\n                        <xcal:dtstart>\n                            <xcal:date-time>2022-04-28T18:43:00.002849Z</xcal:date-time>\n                        </xcal:dtstart>\n                        <oadr:oadrReportPayload>\n                            <ei:rID>2774cb8a-0282-4a30-ac09-e580e992311f</ei:rID>\n                            <ei:payloadFloat>\n                                <ei:value>1.0</ei:value>\n                            </ei:payloadFloat>\n                        </oadr:oadrReportPayload>\n                    </ei:interval>\n                </strm:intervals>\n                <ei:eiReportID></ei:eiReportID>\n                <ei:reportRequestID>81ade658-7417-4876-9ab8-a88d85407627</ei:reportRequestID>\n                <ei:reportSpecifierID>73d02c4a-422f-46f9-82c8-d76f7e4f16e3</ei:reportSpecifierID>\n                <ei:reportName>TELEMETRY_STATUS</ei:reportName>\n                <ei:createdDateTime>2022-04-28T18:43:00.002738Z</ei:createdDateTime>\n            </oadr:oadrReport>\n            <ei:venID>NHEC_test_01</ei:venID>\n        </oadr:oadrUpdateReport>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiReport",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"port": "8082",
+									"path": [
+										"OpenADR2",
+										"Simple",
+										"2.0b",
+										"EiReport"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "EiReport",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\" xmlns:emix=\"http://docs.oasis-open.org/ns/emix/2011/06\" oadr:Id=\"oadrSignedObject\">\n        <oadr:oadrUpdateReport ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\">\n            <pyld:requestID>a9dbe4a1-592b-47de-9a99-ccfa7318f19f</pyld:requestID>\n            <oadr:oadrReport xmlns:xcal=\"urn:ietf:params:xml:ns:icalendar-2.0\">\n                <strm:intervals xmlns:strm=\"urn:ietf:params:xml:ns:icalendar-2.0:stream\">\n                    <ei:interval>\n                        <xcal:dtstart>\n                            <xcal:date-time>2022-04-28T18:43:00.002849Z</xcal:date-time>\n                        </xcal:dtstart>\n                        <oadr:oadrReportPayload>\n                            <ei:rID>2774cb8a-0282-4a30-ac09-e580e992311f</ei:rID>\n                            <ei:payloadFloat>\n                                <ei:value>1.0</ei:value>\n                            </ei:payloadFloat>\n                        </oadr:oadrReportPayload>\n                    </ei:interval>\n                </strm:intervals>\n                <ei:eiReportID></ei:eiReportID>\n                <ei:reportRequestID>81ade658-7417-4876-9ab8-a88d85407627</ei:reportRequestID>\n                <ei:reportSpecifierID>73d02c4a-422f-46f9-82c8-d76f7e4f16e3</ei:reportSpecifierID>\n                <ei:reportName>TELEMETRY_STATUS</ei:reportName>\n                <ei:createdDateTime>2022-04-28T18:43:00.002738Z</ei:createdDateTime>\n            </oadr:oadrReport>\n            <ei:venID>NHEC_test_01</ei:venID>\n        </oadr:oadrUpdateReport>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+										},
+										"url": {
+											"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiReport",
+											"protocol": "http",
+											"host": [
+												"{{env}}",
+												"nhecter",
+												"com"
+											],
+											"port": "8082",
+											"path": [
+												"OpenADR2",
+												"Simple",
+												"2.0b",
+												"EiReport"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/xml; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "682"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 28 Apr 2022 19:02:09 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Python/3.10 aiohttp/3.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n        <oadr:oadrUpdatedReport ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">\n            <ei:eiResponse>\n                <ei:responseCode>200</ei:responseCode>\n                <ei:responseDescription>OK</ei:responseDescription>\n                <pyld:requestID>a9dbe4a1-592b-47de-9a99-ccfa7318f19f</pyld:requestID>\n            </ei:eiResponse>\n            <ei:venID>NHEC_test_01</ei:venID>\n        </oadr:oadrUpdatedReport>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+								}
+							]
+						},
+						{
+							"name": "Usage Report",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n<oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\" xmlns:emix=\"http://docs.oasis-open.org/ns/emix/2011/06\" oadr:Id=\"oadrSignedObject\"><oadr:oadrUpdateReport ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\"><pyld:requestID>6597773f-a259-4d04-bcb2-e2c387a2fd8d</pyld:requestID><oadr:oadrReport xmlns:xcal=\"urn:ietf:params:xml:ns:icalendar-2.0\"><xcal:dtstart><xcal:date-time>2022-05-09T00:00:00.000000Z</xcal:date-time></xcal:dtstart><strm:intervals xmlns:strm=\"urn:ietf:params:xml:ns:icalendar-2.0:stream\"><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T00:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.0</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T01:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.01</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T02:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.02</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T03:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.03</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T04:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.04</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T05:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.05</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T06:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.06</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T07:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.07</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T08:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.08</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T09:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.09</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T10:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.1</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T11:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.11</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T12:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.12</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T13:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.13</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T14:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.14</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T15:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.15</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T16:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.16</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T17:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.17</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T18:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.18</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T19:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.19</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T20:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.2</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T21:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.21</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T22:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.22</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T23:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.23</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval></strm:intervals><ei:eiReportID></ei:eiReportID><ei:reportRequestID>8a0dd83c-fad1-4562-94c9-9ad42a774cff</ei:reportRequestID><ei:reportSpecifierID>9cf207f2-dee4-4365-bb18-6dcead19722f</ei:reportSpecifierID><ei:reportName>TELEMETRY_USAGE</ei:reportName><ei:createdDateTime>2022-05-09T20:33:20.005621Z</ei:createdDateTime></oadr:oadrReport><ei:venID>NHEC_test_01</ei:venID></oadr:oadrUpdateReport></oadr:oadrSignedObject>\n</oadr:oadrPayload>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiReport",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"port": "8082",
+									"path": [
+										"OpenADR2",
+										"Simple",
+										"2.0b",
+										"EiReport"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Usage Report Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n<oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\" xmlns:emix=\"http://docs.oasis-open.org/ns/emix/2011/06\" oadr:Id=\"oadrSignedObject\"><oadr:oadrUpdateReport ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\"><pyld:requestID>6597773f-a259-4d04-bcb2-e2c387a2fd8d</pyld:requestID><oadr:oadrReport xmlns:xcal=\"urn:ietf:params:xml:ns:icalendar-2.0\"><xcal:dtstart><xcal:date-time>2022-05-09T00:00:00.000000Z</xcal:date-time></xcal:dtstart><strm:intervals xmlns:strm=\"urn:ietf:params:xml:ns:icalendar-2.0:stream\"><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T00:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.0</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T01:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.01</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T02:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.02</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T03:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.03</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T04:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.04</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T05:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.05</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T06:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.06</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T07:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.07</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T08:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.08</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T09:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.09</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T10:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.1</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T11:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.11</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T12:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.12</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T13:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.13</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T14:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.14</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T15:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.15</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T16:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.16</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T17:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.17</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T18:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.18</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T19:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.19</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T20:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.2</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T21:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.21</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T22:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.22</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval><ei:interval><xcal:dtstart><xcal:date-time>2022-05-09T23:00:00.000000Z</xcal:date-time></xcal:dtstart><oadr:oadrReportPayload><ei:rID>beb715a9-8fe6-4041-8033-a7eaf7055f52</ei:rID><ei:payloadFloat><ei:value>0.23</ei:value></ei:payloadFloat></oadr:oadrReportPayload></ei:interval></strm:intervals><ei:eiReportID></ei:eiReportID><ei:reportRequestID>8a0dd83c-fad1-4562-94c9-9ad42a774cff</ei:reportRequestID><ei:reportSpecifierID>9cf207f2-dee4-4365-bb18-6dcead19722f</ei:reportSpecifierID><ei:reportName>TELEMETRY_USAGE</ei:reportName><ei:createdDateTime>2022-05-09T20:33:20.005621Z</ei:createdDateTime></oadr:oadrReport><ei:venID>NHEC_test_01</ei:venID></oadr:oadrUpdateReport></oadr:oadrSignedObject>\n</oadr:oadrPayload>",
+											"options": {
+												"raw": {
+													"language": "xml"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://{{env}}.nhecter.com:8082/OpenADR2/Simple/2.0b/EiReport",
+											"protocol": "http",
+											"host": [
+												"{{env}}",
+												"nhecter",
+												"com"
+											],
+											"port": "8082",
+											"path": [
+												"OpenADR2",
+												"Simple",
+												"2.0b",
+												"EiReport"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "xml",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/xml; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "682"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 11 May 2022 20:46:10 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "Python/3.10 aiohttp/3.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<oadr:oadrPayload xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\">\n    <oadr:oadrSignedObject xmlns:oadr=\"http://openadr.org/oadr-2.0b/2012/07\" oadr:Id=\"oadrSignedObject\">\n        <oadr:oadrUpdatedReport ei:schemaVersion=\"2.0b\" xmlns:ei=\"http://docs.oasis-open.org/ns/energyinterop/201110\" xmlns:pyld=\"http://docs.oasis-open.org/ns/energyinterop/201110/payloads\">\n            <ei:eiResponse>\n                <ei:responseCode>200</ei:responseCode>\n                <ei:responseDescription>OK</ei:responseDescription>\n                <pyld:requestID>6597773f-a259-4d04-bcb2-e2c387a2fd8d</pyld:requestID>\n            </ei:eiResponse>\n            <ei:venID>NHEC_test_01</ei:venID>\n        </oadr:oadrUpdatedReport>\n    </oadr:oadrSignedObject>\n</oadr:oadrPayload>"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "EiRegisterParty Payloads  \n• oadrQueryRegistration - A way for the VEN to query the VTNs registration  \ninformation without actually registering.  \n• oadrCreatePartyRegistration - A request from the VEN to the VTN to register.  \nContains information about the VENs capabilities.  \n• oadrCreatedPartyRegistration - Response to either a oadrQueryRegistration or a  \noadrCreatePartyRegistration. Contains VTN capabilities and registration information  \nnecessary for the VEN to interoperate  \n• oadrCancelPartyRegistration - Used by either the VEN or VTN to cancel registration  \n• oadrCanceledPartyRegistration - Reponse to a oadrCancelPartyRegistration.  \nAcknowledges receipt of the registration cancellation  \n• oadrRequestReregistration - This payload is used by a VTN in a pull exchange  \nmodel to signal the VEN to reinitiate the registration sequence  \n• oadrResponse - Used as a placeholder response in some pull exchange patte"
+		},
+		{
+			"name": "Meters API",
+			"item": [
+				{
+					"name": "GET Meters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{env}}.nhecter.com/meters/",
+							"protocol": "http",
+							"host": [
+								"{{env}}",
+								"nhecter",
+								"com"
+							],
+							"path": [
+								"meters",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Workflows",
+			"item": [
+				{
+					"name": "Setting Up VTN and VEN Testing",
+					"item": [
+						{
+							"name": "Update Prices",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');",
+											"let currentdate = moment().format((\"YYYY-MM-DD\"));",
+											"let nextday = moment(currentdate).add(1, 'days').format((\"YYYY-MM-DD\"));",
+											"pm.environment.set('currentdate', currentdate);",
+											"pm.environment.set('nextday', nextday);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "Barry0325!",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"schedule\": {\n        \"date\":\"{{currentdate}}\",\n        \"prices\": [\n            {\"datetime\":\"{{nextday}}T0:0:0+0000\",\"price\":\"12.34\"},\n            {\"datetime\":\"{{nextday}}T0:1:0+0000\",\"price\":\"23.45\"},\n            {\"datetime\":\"{{nextday}}T0:2:0+0000\",\"price\":\"34.56\"}\n        ]\n    }\n}"
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com/prices/",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"path": [
+										"prices",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Meters ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"meters\":[\n      { \"meter_id\": \"{{meter_id}}\", \"ven_id\": \"{{ven_id}}\", \"device_id\": \"{{device_id}}\" }\n    ]\n}"
+								},
+								"url": {
+									"raw": "http://{{env}}.nhecter.com/meters/",
+									"protocol": "http",
+									"host": [
+										"{{env}}",
+										"nhecter",
+										"com"
+									],
+									"path": [
+										"meters",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

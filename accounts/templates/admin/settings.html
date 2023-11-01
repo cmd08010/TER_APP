@@ -1,0 +1,10 @@
+{% extends 'base_custom.html' %}
+
+{% block content %}
+  <h1>Settings</h1>
+  <a href="{% url 'change_password' %}">Change Password</a><br>
+  {% if perms.admin %}
+    <a href="{% url 'admin_settings' %}">Admin Settings</a><br>
+  {% endif %}
+  <a href="{% url 'logout_user' %}">Logout</a><br>
+{% endblock %}

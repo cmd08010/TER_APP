@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  vtn:
+    build: .
+    command: python openadr/openadr.py -r 20 -s 10
+    volumes:
+      - .:/code
+    ports:
+      - "8082:8082"
+    depends_on:
+      - web
+    environment:
+      - TER_HOST=http://web:8000
+        # TODO: Mock this URL out for dev
+      - MDM_URL=http://127.0.0.1
+  web:
+    build: .
+    # command: python ter.py
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=SECRET_KEY
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - POSTGRES_DB=nhec
+      - POSTGRES_USER=nhec
+      - POSTGRES_PASSWORD=nhec
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - db
+  celery:
+    build: .
+    command: celery --app=nhec_ter worker --loglevel=info -B -E
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=SECRET_KEY
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: nhec
+      POSTGRES_USER: nhec
+      POSTGRES_PASSWORD: nhec
+  redis:
+    image: redis:6-alpine
+volumes:
+  db_data: {}
